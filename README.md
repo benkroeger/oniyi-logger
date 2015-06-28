@@ -1,4 +1,6 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
+[![NPM info](https://nodei.co/npm/oniyi-limiter.png?downloads=true)](https://nodei.co/npm/oniyi-limiter.png?downloads=true)
+
+[![dependencies](https://david-dm.org/benkroeger/oniyi-limiter.png)](https://david-dm.org/benkroeger/oniyi-limiter.png)
 
 > A simple loglevel wrapper around console.log
 
@@ -13,9 +15,22 @@ $ npm install --save oniyi-logger
 ## Usage
 
 ```js
-var oniyiLogger = require('oniyi-logger');
+var logger = require('oniyi-logger');
 
-oniyiLogger('Rainbow');
+logger('my info message');
+logger.info('my info message');
+logger.debug('my debug message');
+logger.warn('my warn message');
+logger.error('my error message');
+
+var labeledLogger = logger.makeLabeledLogger('my label');
+
+labeledLogger('my info message');
+labeledLogger.info('my info message');
+labeledLogger.debug('my debug message');
+labeledLogger.warn('my warn message');
+labeledLogger.error('my error message');
+
 ```
 
 

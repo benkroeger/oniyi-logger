@@ -2,9 +2,17 @@
 var assert = require('assert');
 var oniyiLogger = require('../');
 
+var stdout = process.stdout;
+
 describe('oniyi-logger node module', function () {
-  it('must have at least one test', function () {
-    oniyiLogger();
-    assert(false, 'I was too lazy to write any tests. Shame on me.');
+  it('must log on level "INFO"', function () {
+  	function verifyInfoLevel(data){
+  		assert.equal(data, 'INFO foo', '"foo" was not logged on "INFO" level');
+  		stdout.off(verifyInfoLevel);
+  	}
+
+  	stdout.on('data', verifyInfoLevel);
+
+    oniyiLogger('foo');
   });
 });
