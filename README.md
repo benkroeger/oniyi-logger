@@ -1,6 +1,6 @@
-[![NPM info](https://nodei.co/npm/oniyi-limiter.png?downloads=true)](https://nodei.co/npm/oniyi-limiter.png?downloads=true)
+[![NPM info](https://nodei.co/npm/oniyi-logger.png?downloads=true)](https://nodei.co/npm/oniyi-logger.png?downloads=true)
 
-[![dependencies](https://david-dm.org/benkroeger/oniyi-limiter.png)](https://david-dm.org/benkroeger/oniyi-limiter.png)
+[![dependencies](https://david-dm.org/benkroeger/oniyi-logger.png)](https://david-dm.org/benkroeger/oniyi-logger.png)
 
 > A simple loglevel wrapper around console.log
 
