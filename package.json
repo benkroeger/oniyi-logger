@@ -1,6 +1,6 @@
 {
   "name": "oniyi-logger",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple loglevel wrapper around console.log",
   "author": {
     "name": "Benjamin Kroeger",

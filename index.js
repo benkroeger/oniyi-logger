@@ -8,11 +8,6 @@ var levels = [
   'DEBUG', 'INFO', 'WARN', 'ERROR'
 ];
 
-// make the main exported function a logger on level "INFO"
-module.exports = function() {
-  console.log('INFO %s', util.format.apply(util, arguments));
-};
-
 // create logging function for each level
 levels.forEach(function(level) {
   module.exports[level.toLowerCase()] = function() {
@@ -28,15 +23,12 @@ module.exports.makeLabeledLogger = function(label) {
     return module.exports;
   }
 
-  // create a plain logger function
-  var logger = function() {
-    console.log('[%s] INFO %s', label, util.format.apply(util, arguments));
-  };
+  var logger = {};
 
   // create logging function for each level
   levels.forEach(function(level) {
     logger[level.toLowerCase()] = function() {
-      console.log('[%s] %s %s', label, level, util.format.apply(util, arguments));
+      console.log('%s [%s] %s', level, label, util.format.apply(util, arguments));
     };
   });
 
