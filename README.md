@@ -14,22 +14,37 @@ $ npm install --save oniyi-logger
 
 ## Usage
 
+all log functions work similar to console.log() and can take multiple arguments in a printf()-like way
+
+
 ```js
+var fs = require('fs');
+
+// standard use-case, will log to process.stdout
 var logger = require('oniyi-logger');
 
-logger('my info message');
-logger.info('my info message');
+logger.info('my %s message', 'info');
 logger.debug('my debug message');
 logger.warn('my warn message');
 logger.error('my error message');
 
-var labeledLogger = logger.makeLabeledLogger('my label');
 
-labeledLogger('my info message');
+// log with labels
+var labeledLogger = logger.Logger({label: 'my label'});
+
 labeledLogger.info('my info message');
 labeledLogger.debug('my debug message');
 labeledLogger.warn('my warn message');
 labeledLogger.error('my error message');
+
+
+// log to a file
+var labeledFileLog = logger.Logger({label: 'file', sink: fs.createWriteStream('file.log, {flags: 'a'}')});
+
+labeledFileLog.info('my info message');
+labeledFileLog.debug('my debug message');
+labeledFileLog.warn('my warn message');
+labeledFileLog.error('my error message');
 
 ```
 
