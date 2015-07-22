@@ -34,7 +34,8 @@ levels.forEach(function(level){
 
 // create and export default logger (to stdout)
 var logger = new Logger();
-module.exports = logger;
 
 // also export the constructor to allow others to create labelled loggers or even define their own sink
-module.exports.Logger = Logger;
+logger.Logger = Logger;
+
+module.exports = logger;
