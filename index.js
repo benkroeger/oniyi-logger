@@ -9,6 +9,10 @@ var levels = [
 ];
 
 function Logger(options) {
+  if (!(this instanceof Logger)) {
+    return new Logger(options);
+  }
+  
   options = options || {};
   this._sink = (options.sink && options.sink.write) ? options.sink : process.stdout;
   if (options.label) {
