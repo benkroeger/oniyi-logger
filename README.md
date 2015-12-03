@@ -1,8 +1,6 @@
 [![NPM info](https://nodei.co/npm/oniyi-logger.png?downloads=true)](https://nodei.co/npm/oniyi-logger.png?downloads=true)
 
-[![dependencies](https://david-dm.org/benkroeger/oniyi-logger.png)](https://david-dm.org/benkroeger/oniyi-logger.png)
-
-> A simple loglevel wrapper around console.log
+> A simple loglevel and label wrapper around process.stdout
 
 
 ## Install
@@ -21,42 +19,46 @@ all log functions work similar to console.log() and can take multiple arguments 
 var fs = require('fs');
 
 // standard use-case, will log to process.stdout
-var logger = require('oniyi-logger');
+var logger = require('oniyi-logger')();
 
 logger.info('my %s message', 'info');
+// INFO my info message
 logger.debug('my debug message');
+// DEBUG my debug message
 logger.warn('my warn message');
+// WARN my warn message
 logger.error('my error message');
+// ERROR my error message
 
 
 // log with labels
-var labeledLogger = logger.Logger({label: 'my label'});
+var labeledLogger = require('oniyi-logger')('my label');
 
 labeledLogger.info('my info message');
+// INFO [my label] my info message
 labeledLogger.debug('my debug message');
+// DEBUG [my label] my debug message
 labeledLogger.warn('my warn message');
+// WARN [my label] my warn message
 labeledLogger.error('my error message');
+// ERROR [my label] my error message
 
 
 // log to a file
-var labeledFileLog = logger.Logger({label: 'file', sink: fs.createWriteStream('file.log, {flags: 'a'}')});
+var labeledFileLog = require('oniyi-logger')('file', {sink: fs.createWriteStream('file.log, {flags: 'a'}')});
 
 labeledFileLog.info('my info message');
+// writes "INFO [file] my info message" to file.log
 labeledFileLog.debug('my debug message');
+// writes "DEBUG [file] my debug message" to file.log
 labeledFileLog.warn('my warn message');
+// writes "WARN [file] my warn message" to file.log
 labeledFileLog.error('my error message');
+// writes "ERROR [file] my wrror message" to file.log
 
 ```
 
 
 ## License
 
-MIT © [Benjamin Kroeger]()
-
-
-[npm-image]: https://badge.fury.io/js/oniyi-logger.svg
-[npm-url]: https://npmjs.org/package/oniyi-logger
-[travis-image]: https://travis-ci.org/benkroeger/oniyi-logger.svg?branch=master
-[travis-url]: https://travis-ci.org/benkroeger/oniyi-logger
-[daviddm-image]: https://david-dm.org/benkroeger/oniyi-logger.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/benkroeger/oniyi-logger
+Apache 2.0 © [Benjamin Kroeger]()

@@ -6,12 +6,12 @@ var stdout = process.stdout;
 
 describe('oniyi-logger node module', function () {
   it('must log on level "INFO"', function () {
-  	function verifyInfoLevel(data){
-  		assert.equal(data, 'INFO foo', '"foo" was not logged on "INFO" level');
-  		stdout.off(verifyInfoLevel);
-  	}
+    function verifyInfoLevel(data) {
+      assert.equal(data, 'INFO foo', '"foo" was not logged on "INFO" level');
+      stdout.off(verifyInfoLevel);
+    }
 
-  	stdout.on('data', verifyInfoLevel);
+    stdout.on('data', verifyInfoLevel);
 
     oniyiLogger('foo');
   });

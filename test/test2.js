@@ -2,7 +2,7 @@
 var fs = require('fs');
 
 var writeFile = fs.createWriteStream('./file.log', {
-	flags: 'a'
+  flags: 'a'
 });
 var oniyiLogger = require('../');
 
@@ -11,7 +11,10 @@ oniyiLogger.warn('this should be on warn level');
 oniyiLogger.debug('this should be on debug level');
 oniyiLogger.error('this should be on error level');
 
-var labeledLogger = new oniyiLogger.Logger({label: 'my label', sink: writeFile});
+var labeledLogger = new oniyiLogger.Logger({
+  label: 'my label',
+  sink: writeFile
+});
 
 labeledLogger.info('this should be on info level');
 labeledLogger.warn('this should be on warn level');
