@@ -54,7 +54,7 @@ var labeledFileLog = require('oniyi-logger')('file', {sink: fs.createWriteStream
 labeledFileLog.info('my info message');
 // writes "INFO [file] my info message" to file.log
 labeledFileLog.debug('my debug message');
-// writes "DEBUG [file] my debug message" to file.log
+// writes does not write anything to file.log
 labeledFileLog.warn('my warn message');
 // writes "WARN [file] my warn message" to file.log
 labeledFileLog.error('my error message');
