@@ -12,7 +12,10 @@ $ npm install --save oniyi-logger
 
 ## Usage
 
-all log functions work similar to console.log() and can take multiple arguments in a printf()-like way
+all log functions work similar to console.log() and can take multiple arguments in a printf()-like way.  
+Note that the debug method is a noop per default. To enable `debug` logging, you must use a labled logger,  
+and list the label in the `NODE_DEBUG` environment variable.  
+`NODE_DEBUG` must be a comma`,` or space` ` separated list
 
 
 ```js
@@ -24,7 +27,7 @@ var logger = require('oniyi-logger')();
 logger.info('my %s message', 'info');
 // INFO my info message
 logger.debug('my debug message');
-// DEBUG my debug message
+// Does not log anything
 logger.warn('my warn message');
 // WARN my warn message
 logger.error('my error message');
@@ -32,16 +35,17 @@ logger.error('my error message');
 
 
 // log with labels
-var labeledLogger = require('oniyi-logger')('my label');
+process.env.NODE_DEBUG = 'my-label';
+var labeledLogger = require('oniyi-logger')('my-label');
 
 labeledLogger.info('my info message');
-// INFO [my label] my info message
+// INFO [my-label] my info message
 labeledLogger.debug('my debug message');
-// DEBUG [my label] my debug message
+// DEBUG [my-label] my debug message
 labeledLogger.warn('my warn message');
-// WARN [my label] my warn message
+// WARN [my-label] my warn message
 labeledLogger.error('my error message');
-// ERROR [my label] my error message
+// ERROR [my-label] my error message
 
 
 // log to a file
