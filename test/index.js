@@ -1,8 +1,8 @@
-/*eslint-env mocha */
+/* eslint-env mocha */
 'use strict';
 
-var expect = require('chai').expect;
-var loggerFactory = require('../lib');
+const expect = require('chai').expect;
+const loggerFactory = require('../lib');
 
 // define a noop function
 function noop() {}
@@ -13,11 +13,11 @@ function FakeStream() {
 }
 
 FakeStream.prototype.onWrite = function onWrite(fn) {
-  var self = this;
+  const self = this;
   if (typeof fn === 'function') {
     // allow each writeCallback only to be called once
     // override with noop directly afterwards
-    self.writeCallback = function () {
+    self.writeCallback = function writeCallback() {
       fn.apply(self, arguments);
       self.writeCallback = noop;
     };
@@ -31,24 +31,23 @@ FakeStream.prototype.write = function write(data) {
   this.writeCallback(data);
 };
 
-describe('unlabled logger', function () {
+describe('unlabled logger', function unlabledLoggerTest() {
   // create fake streams for outSink and errSink
-  var outSink = new FakeStream();
-  var errSink = new FakeStream();
+  const outSink = new FakeStream();
+  const errSink = new FakeStream();
 
   // create the logger and define outSink
-  var logger = loggerFactory(false, {
-    outSink: outSink,
-    errSink: errSink
+  const logger = loggerFactory(false, {
+    outSink, errSink,
   });
 
   // the test message
-  var logMessage = 'foo';
+  const logMessage = 'foo';
 
   it('should log with level INFO', function (done) {
     outSink
       .onWrite(function verifyInfoLevel(data) {
-        var re = new RegExp('^INFO\\s' + logMessage);
+        const re = new RegExp('^INFO\\s' + logMessage);
         expect(data).to.match(re, 'Wrong logLevel or message');
         done();
       });
@@ -57,7 +56,7 @@ describe('unlabled logger', function () {
   });
 
   it('should NOT log with level DEBUG', function (done) {
-    var timeout = setTimeout(function closeDebugTest() {
+    const timeout = setTimeout(function closeDebugTest() {
       errSink.onWrite(false);
       return done();
     }, 50);
@@ -74,7 +73,7 @@ describe('unlabled logger', function () {
   it('should log with level WARN', function (done) {
     outSink
       .onWrite(function verifyWarnLevel(data) {
-        var re = new RegExp('^WARN\\s' + logMessage);
+        const re = new RegExp('^WARN\\s' + logMessage);
         expect(data).to.match(re, 'Wrong logLevel or message');
         done();
       });
@@ -85,7 +84,7 @@ describe('unlabled logger', function () {
   it('should log with level ERROR', function (done) {
     errSink
       .onWrite(function verifyErrorLevel(data) {
-        var re = new RegExp('^ERROR\\s' + logMessage);
+        const re = new RegExp('^ERROR\\s' + logMessage);
         expect(data).to.match(re, 'Wrong logLevel or message');
         done();
       });
@@ -94,25 +93,24 @@ describe('unlabled logger', function () {
   });
 });
 
-describe('labled logger', function () {
+describe('labled logger', function labledLoggerTest() {
   // create fake streams for outSink and errSink
-  var outSink = new FakeStream();
-  var errSink = new FakeStream();
+  const outSink = new FakeStream();
+  const errSink = new FakeStream();
 
   // create the logger and define outSink
-  var loggerLabel = 'test-logger';
-  var logger = loggerFactory(loggerLabel, {
-    outSink: outSink,
-    errSink: errSink
+  const loggerLabel = 'test-logger';
+  const logger = loggerFactory(loggerLabel, {
+    outSink, errSink,
   });
 
   // the test message
-  var logMessage = 'foo';
+  const logMessage = 'foo';
 
   it('should log with level INFO', function (done) {
     outSink
       .onWrite(function verifyInfoLevel(data) {
-        var re = new RegExp('^INFO\\s\\[' + loggerLabel + '\\]\\s' + logMessage);
+        const re = new RegExp('^INFO\\s\\[' + loggerLabel + '\\]\\s' + logMessage);
         expect(data).to.match(re, 'Wrong logLevel or message');
         done();
       });
@@ -121,7 +119,7 @@ describe('labled logger', function () {
   });
 
   it('should NOT log with level DEBUG', function (done) {
-    var timeout = setTimeout(function closeDebugTest() {
+    const timeout = setTimeout(function closeDebugTest() {
       errSink.onWrite(false);
       return done();
     }, 50);
@@ -138,7 +136,7 @@ describe('labled logger', function () {
   it('should log with level WARN', function (done) {
     outSink
       .onWrite(function verifyWarnLevel(data) {
-        var re = new RegExp('^WARN\\s\\[' + loggerLabel + '\\]\\s' + logMessage);
+        const re = new RegExp('^WARN\\s\\[' + loggerLabel + '\\]\\s' + logMessage);
         expect(data).to.match(re, 'Wrong logLevel or message');
         done();
       });
@@ -149,7 +147,7 @@ describe('labled logger', function () {
   it('should log with level ERROR', function (done) {
     errSink
       .onWrite(function verifyErrorLevel(data) {
-        var re = new RegExp('^ERROR\\s\\[' + loggerLabel + '\\]\\s' + logMessage);
+        const re = new RegExp('^ERROR\\s\\[' + loggerLabel + '\\]\\s' + logMessage);
         expect(data).to.match(re, 'Wrong logLevel or message');
         done();
       });
@@ -160,31 +158,30 @@ describe('labled logger', function () {
 
 describe('labled logger with debug enabled', function () {
   // create fake streams for outSink and errSink
-  var outSink = new FakeStream();
-  var errSink = new FakeStream();
+  const outSink = new FakeStream();
+  const errSink = new FakeStream();
 
   // create the logger and define outSink
-  var loggerLabel = 'test-logger-debug';
+  const loggerLabel = 'test-logger-debug';
 
   // remember original NODE_DEBUG value
-  var nodeDebug = process.env.NODE_DEBUG;
+  const nodeDebug = process.env.NODE_DEBUG;
 
   process.env.NODE_DEBUG =
     process.env.NODE_DEBUG ?
     process.env.NODE_DEBUG + ' ' + loggerLabel : loggerLabel;
 
-  var logger = loggerFactory(loggerLabel, {
-    outSink: outSink,
-    errSink: errSink
+  const logger = loggerFactory(loggerLabel, {
+    outSink, errSink,
   });
 
   // the test message
-  var logMessage = 'foo';
+  const logMessage = 'foo';
 
   it('should log with level DEBUG', function (done) {
     errSink
       .onWrite(function verifyDebugLevel(data) {
-        var re = new RegExp('^DEBUG\\s\\[' + loggerLabel + '\\]\\s' + logMessage);
+        const re = new RegExp('^DEBUG\\s\\[' + loggerLabel + '\\]\\s' + logMessage);
         expect(data).to.match(re, 'Wrong logLevel or message');
         done();
       });
