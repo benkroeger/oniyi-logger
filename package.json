@@ -24,11 +24,13 @@
   "repository": "git@github.com:benkroeger/oniyi-logger.git",
   "devDependencies": {
     "chai": "3.4.1",
+    "eslint": "1.10.3",
+    "eslint-config-oniyi": "1.0.1",
     "gulp": "^3.6.0",
     "gulp-coveralls": "^0.1.0",
     "gulp-eslint": "^1.0.0",
     "gulp-exclude-gitignore": "^1.0.0",
-    "gulp-istanbul": "^0.9.0",
+    "gulp-istanbul": "^0.10.3",
     "gulp-mocha": "^2.0.0",
     "gulp-nsp": "^2.1.0",
     "gulp-plumber": "^1.0.0"
@@ -37,5 +39,10 @@
     "prepublish": "gulp prepublish",
     "test": "gulp"
   },
+  {
+    "engines": {
+      "node": "^4.2.4"
+    }
+  }
   "license": "Apache-2.0"
 }
