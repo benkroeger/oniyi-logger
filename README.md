@@ -63,6 +63,9 @@ labeledFileLog.error('my error message');
 ```
 
 
+Use a logger's instance methods `enableDebug()` and `disableDebug` to enable or disable debugging
+on that particular instance.
+
 ## License
 
 Apache 2.0 © [Benjamin Kroeger]()
