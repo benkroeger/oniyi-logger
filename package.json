@@ -1,6 +1,6 @@
 {
   "name": "oniyi-logger",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "A simple loglevel and label wrapper around process.stdout",
   "homepage": "",
   "author": {
