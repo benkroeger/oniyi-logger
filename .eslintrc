@@ -1,4 +1,3 @@
 {
-  "extends": "oniyi",
-  "rules": {}
+  "extends": "oniyi/node"
 }
