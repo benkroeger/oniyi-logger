@@ -12,40 +12,23 @@ $ npm install --save oniyi-logger
 
 ## Usage
 
-all log functions work similar to console.log() and can take multiple arguments in a printf()-like way.  
-Note that the debug method is a noop per default. To enable `debug` logging, you must use a labled logger,  
-and list the label in the `NODE_DEBUG` environment variable.  
-`NODE_DEBUG` must be a comma`,` or space` ` separated list
+all log functions work similar to console.log() and can take multiple arguments in a printf()-like way. *Note* that the `debug()` method is a noop per default. To enable `debug()` logging, you must use a labled logger, and list the label in the `NODE_DEBUG` environment variable. `NODE_DEBUG` must be a comma`,` or space` ` separated list
 
 
 ```js
 var fs = require('fs');
 
 // standard use-case, will log to process.stdout
-var logger = require('oniyi-logger')();
+var logger = require('oniyi-logger')('my-awesome-module');
 
 logger.info('my %s message', 'info');
-// INFO my info message
+// INFO [my-awesome-module] my info message
 logger.debug('my debug message');
 // Does not log anything
 logger.warn('my warn message');
-// WARN my warn message
+// WARN [my-awesome-module] my warn message
 logger.error('my error message');
-// ERROR my error message
-
-
-// log with labels
-process.env.NODE_DEBUG = 'my-label';
-var labeledLogger = require('oniyi-logger')('my-label');
-
-labeledLogger.info('my info message');
-// INFO [my-label] my info message
-labeledLogger.debug('my debug message');
-// DEBUG [my-label] my debug message
-labeledLogger.warn('my warn message');
-// WARN [my-label] my warn message
-labeledLogger.error('my error message');
-// ERROR [my-label] my error message
+// ERROR [my-awesome-module] my error message
 
 
 // log to a file
@@ -62,9 +45,37 @@ labeledFileLog.error('my error message');
 
 ```
 
+You can use nested lables to controle debug messages with finer granularity.
 
-Use a logger's instance methods `enableDebug()` and `disableDebug` to enable or disable debugging
-on that particular instance.
+so with `process.env.NODE_DEBUG = 'foo:bar'`, you get this:
+
+```
+const oniyiLogger = require('oniyi-logger');
+const fooLogger = oniyiLogger('foo');
+const barLogger = oniyiLogger('foo:bar');
+
+fooLogger.debug('my debug message');
+// Does not log anything
+
+barLogger.debug('my debug message');
+// DEBUG [foo:bar] my debug message
+
+```
+
+and with `process.env.NODE_DEBUG = 'foo:*'`, you get this:
+
+```
+const oniyiLogger = require('oniyi-logger');
+const fooLogger = oniyiLogger('foo');
+const barLogger = oniyiLogger('foo:bar');
+
+fooLogger.debug('my debug message');
+// DEBUG [foo] my debug message
+
+barLogger.debug('my debug message');
+// DEBUG [foo:bar] my debug message
+
+```
 
 ## License
 
